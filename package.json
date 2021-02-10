@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/akocakaya/note-manager#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.13",
