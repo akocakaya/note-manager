@@ -1,11 +1,24 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 
 import connectDb from './db';
 
-import User from './models/user';
+import userRoutes from './route/user';
 
 const app = express();
+
+var bodyParserJSON = bodyParser.json();
+app.use(bodyParserJSON);
+
+const router = express.Router();
+
+
+
+
+app.use('/api',router);
+
+userRoutes(router);
 
 connectDb().then(
     app.listen(3001, () => {
@@ -15,12 +28,14 @@ connectDb().then(
     console.log(err);
 });
 
+
+
 app.get('/', (req, res) => {
     res.send('Hello world');
 });
 
 app.get('/user/save', async (req, res) => {
-    const exampleUser = new User({
+    const exampleUser = new UserModel({
         username: 'testName00'
     });
 
