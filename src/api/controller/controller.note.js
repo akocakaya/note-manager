@@ -2,8 +2,8 @@ import { NoteModel } from '../model';
 
 export const create = (req, res) => {
     const note = new NoteModel({
-        title: req.body.title,
-        content: req.body.content
+        title   : req.body.title,
+        content : req.body.content
     });
 
     note.save(note)
