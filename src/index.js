@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import connectDb from './db';
 
 import userRoutes from './route/user';
+import { NoteRoute } from './api/route';
 
 const app = express();
 
@@ -13,10 +14,10 @@ app.use(bodyParserJSON);
 
 const router = express.Router();
 
+NoteRoute(router);
 
 
-
-app.use('/api',router);
+app.use(router);
 
 userRoutes(router);
 

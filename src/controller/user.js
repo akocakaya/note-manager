@@ -8,11 +8,14 @@ exports.createUser = (req, res, next) => {
 
     userModel.create(user, (err, user) => {
         if(err) {
-            res.json({
-                error: err
+            res.send({
+                error: {
+                    err,
+                    message: `User already exist with given name: ${req.body.username}`
+                }
             });
         }
-        res.json({
+        res.send({
             message: 'User created successfully'
         });
     });
@@ -26,11 +29,11 @@ exports.getUser = (req, res, next) => {
 
     userModel.get(user, (err, user) => {
         if(err) {
-            res.json({
+            res.send({
                 error: err
             });
         }
-        res.json({
+        res.send({
             message: 'User found successfully'
         });
     });
@@ -42,13 +45,13 @@ exports.updateUser = (req, res, next) => {
         password: req.body.password
     };
 
-    userModel.update(user, (err, user) => {
+    userModel.updateUser(user, (err, user) => {
         if(err) {
-            res.json({
+            res.send({
                 error: err
             });
         }
-        res.json({
+        res.send({
             message: 'User updated successfully'
         });
     });

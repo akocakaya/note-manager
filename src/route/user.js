@@ -1,7 +1,7 @@
 import * as UserController from '../controller/user';
 
 export default (router) => {
-    router.post('/create', UserController.createUser);
-    router.post('/get', UserController.getUser);
-    router.post('/update', UserController.updateUser);
+    router.post('/api/user/create', UserController.createUser);
+    router.post('/api/user/get', UserController.getUser);
+    router.post('/api/user/update', UserController.updateUser);
 }

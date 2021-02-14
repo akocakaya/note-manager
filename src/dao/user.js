@@ -11,7 +11,7 @@ userSchema.statics = {
         mongoose.model('User').find(query, cb);
     },
 
-    update: (query, updateData, cb) => {
+    updateUser: (query, updateData, cb) => {
         mongoose.model('User').findAndUpdate(query, {$set: updateData}, {new: true}, cb);
     }
 }
