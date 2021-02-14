@@ -1,10 +1,9 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 
 import connectDb from './db';
 
-import userRoutes from './route/user';
+import { NoteRoute, UserRoute } from './api/route';
 
 const app = express();
 
@@ -13,12 +12,10 @@ app.use(bodyParserJSON);
 
 const router = express.Router();
 
+NoteRoute(router);
+UserRoute(router);
 
-
-
-app.use('/api',router);
-
-userRoutes(router);
+app.use(router);
 
 connectDb().then(
     app.listen(3001, () => {
@@ -28,26 +25,6 @@ connectDb().then(
     console.log(err);
 });
 
-
-
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
     res.send('Hello world');
-});
-
-app.get('/user/save', async (req, res) => {
-    const exampleUser = new UserModel({
-        username: 'testName00'
-    });
-
-    const result = await exampleUser.save();
-
-    res.send('Saved ' + result);
-});
-
-app.get('/user', async (req, res) => {
-    const user = mongoose.model('User');
-
-    const result = await user.find({});
-
-    res.send(result);
 });
