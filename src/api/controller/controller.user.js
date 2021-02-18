@@ -34,7 +34,7 @@ export const login = (req, res) => {
             .status(404)
             .send({ message: `Username or password can not be empty` });
     
-    password = crypto.createHash('md5').update(req.body.password).digest("hex");
+    password = crypto.createHash('md5').update(password).digest("hex"); //TODO: use https://www.npmjs.com/package/bcryptjs
 
     UserModel.findOne({ username })
         .then(data => {
