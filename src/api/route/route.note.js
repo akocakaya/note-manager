@@ -1,10 +1,11 @@
-import { NoteController } from '../controller'
+import { NoteController }   from '../controller';
+import checkAuth            from '../middleware/check-auth';
 
 export default router => {
-    router.post('/api/note',        NoteController.create);
-    router.get('/api/note',         NoteController.findAll);
-    router.get('/api/note/:id',     NoteController.findById);
-    router.put('/api/note/:id',     NoteController.update);
-    router.delete('/api/note/:id',  NoteController.deleteById);
-    router.delete('/api/note',      NoteController.deleteAll);
+    router.post('/api/note',        checkAuth, NoteController.create);
+    router.get('/api/note',         checkAuth, NoteController.findAll);
+    router.get('/api/note/:id',     checkAuth, NoteController.findById);
+    router.put('/api/note/:id',     checkAuth, NoteController.update);
+    router.delete('/api/note/:id',  checkAuth, NoteController.deleteById);
+    router.delete('/api/note',      checkAuth, NoteController.deleteAll);
 }

@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 
 import connectDb from './db';
 
-import { NoteRoute, UserRoute } from './api/route';
+import { NoteRoute, AuthRoute } from './api/route';
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(bodyParserJSON);
 const router = express.Router();
 
 NoteRoute(router);
-UserRoute(router);
+AuthRoute(router);
 
 app.use(router);
 

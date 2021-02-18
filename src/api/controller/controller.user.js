@@ -1,4 +1,6 @@
 import { UserModel } from '../model';
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
 
 export const register = (req, res) => {
     const user = new UserModel({
@@ -26,6 +28,13 @@ export const register = (req, res) => {
 
 export const login = (req, res) => {
     const username = req.body.username;
+    let password = req.body.password;
+    if(!username || ! password)
+        res
+            .status(404)
+            .send({ message: `Username or password can not be empty` });
+    
+    password = crypto.createHash('md5').update(req.body.password).digest("hex");
 
     UserModel.findOne({ username })
         .then(data => {
@@ -37,10 +46,22 @@ export const login = (req, res) => {
                 res
                     .status(401)
                     .send({ message: `Username or password is wrong` });
-            else
+            else {
+                const token = jwt.sign({
+                        uuid     : data.uuid,
+                        username : data.username,
+                        id       : data.id,
+                        testData : 'testData'
+                    },
+                        'secret_key',
+                    {
+                        expiresIn : '2h'
+                    }
+                );
                 res
                     .status(200)
-                    .send({ message: `User successfully login` });
+                    .send({ message: `User successfully login`, token });
+            }
         })
         .catch(err => {
             res
