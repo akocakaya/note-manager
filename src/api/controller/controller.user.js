@@ -1,5 +1,4 @@
 import { UserModel } from '../model';
-import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import {hash, compare} from '../service/bcrypt';
 
