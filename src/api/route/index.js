@@ -1,7 +1,7 @@
 import NoteRoute from './route.note';
-import UserRoute from './route.user';
+import AuthRoute from './route.auth';
 
 export {
     NoteRoute,
-    UserRoute,
+    AuthRoute,
 }
