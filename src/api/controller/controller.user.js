@@ -69,7 +69,7 @@ export const login = (req, res) => {
         });
 };
 
-export const changePassword = (req, res) => {
+export const forgetPassword = (req, res) => {
     const username = req.body.username;
 
     UserModel.findOneAndUpdate({ username }, req.body)
