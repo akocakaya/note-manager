@@ -1,11 +1,12 @@
 import { UserModel } from '../model';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import {hash, compare} from '../service/bcrypt';
 
 export const register = (req, res) => {
     const user = new UserModel({
         username : req.body.username,
-        password : req.body.password
+        password : hash(req.body.password)
     });
 
     user.save(user)
@@ -33,8 +34,6 @@ export const login = (req, res) => {
         res
             .status(404)
             .send({ message: `Username or password can not be empty` });
-    
-    password = crypto.createHash('md5').update(password).digest("hex"); //TODO: use https://www.npmjs.com/package/bcryptjs
 
     UserModel.findOne({ username })
         .then(data => {
@@ -42,11 +41,8 @@ export const login = (req, res) => {
                 res
                     .status(401)
                     .send({ message: `User could not find` });
-            else if(data.password !== req.body.password)
-                res
-                    .status(401)
-                    .send({ message: `Username or password is wrong` });
-            else {
+
+            if(compare(req.body.password, data.password)) {
                 const token = jwt.sign({
                         uuid     : data.uuid,
                         username : data.username,
@@ -61,6 +57,10 @@ export const login = (req, res) => {
                 res
                     .status(200)
                     .send({ message: `User successfully login`, token });
+            } else {
+                res
+                    .status(401)
+                    .send({ message: `Username or password is wrong` });
             }
         })
         .catch(err => {
