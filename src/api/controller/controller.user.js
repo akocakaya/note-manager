@@ -1,5 +1,4 @@
 import { UserModel } from '../model';
-import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import {hash, compare} from '../service/bcrypt';
 
@@ -47,9 +46,8 @@ export const login = (req, res) => {
                         uuid     : data.uuid,
                         username : data.username,
                         id       : data.id,
-                        testData : 'testData'
                     },
-                        'secret_key',
+                        process.env.JWT_SECRET_KEY,
                     {
                         expiresIn : '2h'
                     }
@@ -70,7 +68,7 @@ export const login = (req, res) => {
         });
 };
 
-export const changePassword = (req, res) => {
+export const forgetPassword = (req, res) => {
     const username = req.body.username;
 
     UserModel.findOneAndUpdate({ username }, req.body)
