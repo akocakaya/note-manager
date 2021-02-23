@@ -4,7 +4,7 @@ const connectDb = () => {
     console.log('MongoDb connected');
 
     return mongoose.connect(
-        'mongodb://localhost/note-manager-db', 
+        process.env.MONGOOSE_URI, 
         {
             useNewUrlParser: true, 
             useUnifiedTopology: true

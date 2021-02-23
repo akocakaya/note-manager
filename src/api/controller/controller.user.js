@@ -46,9 +46,8 @@ export const login = (req, res) => {
                         uuid     : data.uuid,
                         username : data.username,
                         id       : data.id,
-                        testData : 'testData'
                     },
-                        'secret_key',
+                        process.env.JWT_SECRET_KEY,
                     {
                         expiresIn : '2h'
                     }

@@ -1,3 +1,4 @@
+import _env from 'dotenv/config';
 import express from 'express';
 import bodyParser from 'body-parser';
 
@@ -18,8 +19,8 @@ AuthRoute(router);
 app.use(router);
 
 connectDb().then(
-    app.listen(3001, () => {
-        console.log('Note manager app listening on port 3001');
+    app.listen(process.env.EXPRESS_PORT, () => {
+        console.log(`Note manager app listening on port ${process.env.EXPRESS_PORT}`);
     })
 ).catch(err => {
     console.log(err);
