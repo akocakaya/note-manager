@@ -1,6 +1,6 @@
-import { UserModel } from '../model';
-import jwt from 'jsonwebtoken';
-import {hash, compare} from '../service/bcrypt';
+import { UserModel }        from '../model';
+import { hash, compare }    from '../service/bcrypt';
+import { jwtSign }          from '../service/jwt';
 
 export const register = (req, res) => {
     const user = new UserModel({
@@ -42,19 +42,11 @@ export const login = (req, res) => {
                     .send({ message: `User could not find` });
 
             if(compare(req.body.password, data.password)) {
-                const token = jwt.sign({
-                        uuid     : data.uuid,
-                        username : data.username,
-                        id       : data.id,
-                    },
-                        process.env.JWT_SECRET_KEY,
-                    {
-                        expiresIn : 1 * 60 * 60
-                    }
-                );
+                const accessToken = jwtSign(data, 'ACCESS_TOKEN');
+                const refreshToken = jwtSign(data, 'REFRESH_TOKEN');
                 res
                     .status(200)
-                    .send({ message: `User successfully login`, token });
+                    .send({ message: `User successfully login`, accessToken, refreshToken });
             } else {
                 res
                     .status(401)
