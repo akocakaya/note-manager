@@ -1,9 +1,9 @@
-import jwt from 'jsonwebtoken';
+import { jwtVerify } from '../service/jwt';
 
 module.exports = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(" ")[1];
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET_ACCESS_KEY);
+        const decodedToken = jwtVerify(token);
         req.userData = decodedToken;
         next();
     } catch(err) {

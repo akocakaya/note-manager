@@ -22,3 +22,7 @@ export const jwtSign = (data, type) => {
         })
     );
 };
+
+export const jwtVerify = token => {
+    return jwt.verify(token, getTokenType('ACCESS_TOKEN'));
+};
