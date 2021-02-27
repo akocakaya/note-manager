@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 
 import connectDb from './db';
 
-import { NoteRoute, AuthRoute } from './api/route';
+import Routes from './api/route';
 
 const app = express();
 
@@ -13,10 +13,9 @@ app.use(bodyParserJSON);
 
 const router = express.Router();
 
-NoteRoute(router);
-AuthRoute(router);
+Routes(router);
 
-app.use(router);
+app.use('/api', router);
 
 connectDb().then(
     app.listen(process.env.EXPRESS_PORT, () => {

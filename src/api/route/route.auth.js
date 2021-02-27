@@ -1,7 +1,7 @@
 import { UserController } from '../controller';
 
 export default router => {
-    router.post('/api/register',            UserController.register);
-    router.post('/api/login',               UserController.login);
-    router.post('/api/forget-password',     UserController.forgetPassword);
+    router.post('/register',            UserController.register);
+    router.post('/login',               UserController.login);
+    router.post('/forget-password',     UserController.forgetPassword);
 }
