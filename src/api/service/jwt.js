@@ -10,6 +10,16 @@ const getTokenType = type => {
     )
 }
 
+const getExpireValue = type => {
+    return (
+        type === 'ACCESS_TOKEN'
+            ? 1 * 60 * 60
+            : type === 'REFRESH_TOKEN'
+                ? 7 * 24 * 60 * 60
+                : ''
+    )
+}
+
 export const jwtSign = (data, type) => {
     return (
         jwt.sign({
@@ -18,7 +28,7 @@ export const jwtSign = (data, type) => {
         },
             getTokenType(type),
         {
-            expiresIn : 1 * 60 * 60
+            expiresIn : getExpireValue(type)
         })
     );
 };

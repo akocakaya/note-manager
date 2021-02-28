@@ -80,3 +80,17 @@ export const forgetPassword = (req, res) => {
                 .send({ message: err.message || 'Some error occured while changing password' });
         });
 };
+
+export const refreshToken = (req, res) => {
+    try {
+        const accessToken = jwtSign(data, 'ACCESS_TOKEN');
+        const refreshToken = jwtSign(data, 'REFRESH_TOKEN');
+        res
+            .status(200)
+            .send({ accessToken, refreshToken });    
+    } catch(err) {
+        res
+            .status(401)
+            .send({ message: `Token expired` });
+    }
+}
