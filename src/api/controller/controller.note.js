@@ -3,7 +3,8 @@ import { NoteModel } from '../model';
 export const create = (req, res) => {
     const note = new NoteModel({
         title   : req.body.title,
-        content : req.body.content
+        content : req.body.content,
+        userId  : req.userData.id,
     });
 
     note.save(note)
@@ -22,7 +23,7 @@ export const create = (req, res) => {
 };
 
 export const findAll = (req, res) => {
-    NoteModel.find({})
+    NoteModel.find({ userId: req.userData.id })
         .then(data => {
             res
                 .status(200)
@@ -38,7 +39,7 @@ export const findAll = (req, res) => {
 export const findById = (req, res) => {
     const id = req.params.id;
 
-    NoteModel.findById(id)
+    NoteModel.findById({ _id: id })
         .then(data => {
             if(!data)
                 res
@@ -59,7 +60,7 @@ export const findById = (req, res) => {
 export const update = (req, res) => {
     const id = req.params.id;
 
-    NoteModel.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    NoteModel.findByIdAndUpdate({ _id: id }, req.body, { useFindAndModify: false })
         .then(data => {
             if(!data)
                 res
@@ -80,7 +81,7 @@ export const update = (req, res) => {
 export const deleteById = (req, res) => {
     const id = req.params.id;
 
-    NoteModel.findByIdAndRemove(id)
+    NoteModel.findByIdAndRemove({ _id: id })
         .then(data => {
             if(!data)
                 res
@@ -99,7 +100,7 @@ export const deleteById = (req, res) => {
 };
 
 export const deleteAll = (req, res) => {
-    NoteModel.deleteMany({})
+    NoteModel.deleteMany({ userId: req.userData.id })
         .then(data => {
             res
                 .status(200)

@@ -3,7 +3,8 @@ import mongoose from 'mongoose';
 const schema = mongoose.Schema(
     {
         title: String,
-        content: String
+        content: String,
+        userId: String
     }, 
     { 
         timestamps: true,
@@ -16,6 +17,7 @@ schema.method('toJSON', function() {
     
     obj.id = obj._id;
     delete obj._id;
+    delete obj.userId;
 
     return obj;
 });
